@@ -1,66 +1,102 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 📧 MailMaster API
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+MailMaster est une API RESTful développée avec Laravel, permettant de gérer des campagnes d'emailing sans passer par un service externe comme Mailchimp. Cette solution comprend la gestion des abonnés, des newsletters, des campagnes, et des statistiques de lecture.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 🚀 Fonctionnalités
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- **Gestion des Newsletters** : Créez, lisez, mettez à jour et supprimez des newsletters.
+- **Gestion des Abonnés** : Gérez les abonnés avec des fonctionnalités comme l'inscription et la désinscription.
+- **Gestion des Campagnes** : Associez des newsletters à des campagnes et suivez leur envoi.
+- **API RESTful** : Toutes les fonctionnalités sont accessibles via des endpoints API.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Prérequis
 
-## Learning Laravel
+Avant de commencer, assurez-vous d'avoir les éléments suivants installés sur votre machine :
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- PHP >= 8.1
+- Composer
+- MySQL ou un autre système de gestion de base de données compatible
+- Node.js et npm (pour gérer les dépendances front-end si nécessaire)
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Installation
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+1. Clonez le dépôt :
+   ```bash
+   git clone https://github.com/Youcode-Classe-E-2024-2025/tawba-zehaf-MailMaster.git
+   cd mailmaster
+2. Installez les dépendances PHP :
+composer install
+3. Configurez le fichier .env : Copiez le fichier .env.example en .env et configurez vos paramètres de base de données et autres variables d'environnement.
+4. Générez la clé de l'application :
+php artisan key:generate
+5. Exécutez les migrations pour créer les tables nécessaires :
+php artisan migrate
+6. (Optionnel) Installez les dépendances front-end :
+npm install && npm run dev
+7. Lancez le serveur de développement :
+php artisan serve
+L'application sera accessible à l'adresse http://localhost:8000.
 
-## Laravel Sponsors
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+ ## 🔐 Authentification
+Le projet utilise Laravel Sanctum pour gérer l’authentification API.
 
-### Premium Partners
+Endpoints disponibles :
+POST /api/register — Inscription
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+POST /api/login — Connexion
 
-## Contributing
+GET /api/user — Infos utilisateur connecté (token requis)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+ ## 📘 Documentation API
+La documentation interactive est générée automatiquement avec Scribe.
 
-## Code of Conduct
+Pour générer la doc :
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+bash
+Copy
+Edit
+php artisan scribe:generate
+Puis accès à :
+http://localhost:8000/docs
 
-## Security Vulnerabilities
+✅ Stack Technique
+PHP 8.2+
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Laravel 11.x
 
-## License
+Sanctum (auth API)
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Scribe (doc API)
+
+MySQL
+
+##  📁 Structure prévue
+app/Models : Entités principales (User, Newsletter, Subscriber, Campaign)
+
+app/Http/Controllers : Contrôleurs API REST
+
+routes/api.php : Routes de l’API
+
+docs/ : Documentation générée
+
+ ## 🔧 À venir
+Envoi réel d’e-mails via Mailgun ou SendGrid
+
+Statistiques de lecture (taux d’ouverture, clics)
+
+Gestion de listes de diffusion personnalisées
+
+Dashboard admin en React
+
+## 🤝 Contribuer
+Les contributions sont les bienvenues ! Crée une issue ou envoie une Pull Request 🚀
+
+## 📝 Licence
+Ce projet est sous licence MIT.
+
+
+
+
