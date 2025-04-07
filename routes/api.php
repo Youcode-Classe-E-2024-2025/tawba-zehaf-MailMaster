@@ -20,3 +20,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('subscribers', SubscriberController::class);
     Route::apiResource('campaigns', CampaignController::class);
 });
+use App\Http\Controllers\MailingListController;
+
+Route::apiResource('newsletters', NewsletterController::class);
