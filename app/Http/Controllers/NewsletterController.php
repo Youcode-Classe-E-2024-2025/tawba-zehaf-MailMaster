@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Newsletter;
 
 class NewsletterController extends Controller
 {
@@ -11,7 +12,8 @@ class NewsletterController extends Controller
      */
     public function index()
     {
-        //
+        $newsletters = Newsletter::all();
+        return response()->json($newsletters);
     }
 
     /**
@@ -19,7 +21,15 @@ class NewsletterController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'content' => 'required|string',
+            'published_at' => 'nullable|date',
+        ]);
+
+        $newsletter = Newsletter::create($request->all());
+
+        return response()->json(['message' => 'Newsletter created successfully', 'newsletter' => $newsletter], 201);
     }
 
     /**
@@ -27,7 +37,13 @@ class NewsletterController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $newsletter = Newsletter::find($id);
+
+        if (!$newsletter) {
+            return response()->json(['message' => 'Newsletter not found'], 404);
+        }
+
+        return response()->json($newsletter);
     }
 
     /**
@@ -35,7 +51,21 @@ class NewsletterController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $newsletter = Newsletter::find($id);
+
+        if (!$newsletter) {
+            return response()->json(['message' => 'Newsletter not found'], 404);
+        }
+
+        $request->validate([
+            'title' => 'sometimes|required|string|max:255',
+            'content' => 'sometimes|required|string',
+            'published_at' => 'nullable|date',
+        ]);
+
+        $newsletter->update($request->all());
+
+        return response()->json(['message' => 'Newsletter updated successfully', 'newsletter' => $newsletter]);
     }
 
     /**
@@ -43,6 +73,14 @@ class NewsletterController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $newsletter = Newsletter::find($id);
+
+        if (!$newsletter) {
+            return response()->json(['message' => 'Newsletter not found'], 404);
+        }
+
+        $newsletter->delete();
+
+        return response()->json(['message' => 'Newsletter deleted successfully']);
     }
 }
