@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Subscriber;
 
 class SubscriberController extends Controller
 {
@@ -11,7 +12,8 @@ class SubscriberController extends Controller
      */
     public function index()
     {
-        //
+        $subscribers = Subscriber::all();
+        return response()->json($subscribers);
     }
 
     /**
@@ -19,7 +21,14 @@ class SubscriberController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'email' => 'required|string|email|max:255|unique:subscribers',
+            'name' => 'nullable|string|max:255',
+        ]);
+
+        $subscriber = Subscriber::create($request->all());
+
+        return response()->json(['message' => 'Subscriber created successfully', 'subscriber' => $subscriber], 201);
     }
 
     /**
@@ -27,7 +36,13 @@ class SubscriberController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $subscriber = Subscriber::find($id);
+
+        if (!$subscriber) {
+            return response()->json(['message' => 'Subscriber not found'], 404);
+        }
+
+        return response()->json($subscriber);
     }
 
     /**
@@ -35,7 +50,20 @@ class SubscriberController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $subscriber = Subscriber::find($id);
+
+        if (!$subscriber) {
+            return response()->json(['message' => 'Subscriber not found'], 404);
+        }
+
+        $request->validate([
+            'email' => 'sometimes|required|string|email|max:255|unique:subscribers,email,' . $id,
+            'name' => 'nullable|string|max:255',
+        ]);
+
+        $subscriber->update($request->all());
+
+        return response()->json(['message' => 'Subscriber updated successfully', 'subscriber' => $subscriber]);
     }
 
     /**
@@ -43,6 +71,14 @@ class SubscriberController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $subscriber = Subscriber::find($id);
+
+        if (!$subscriber) {
+            return response()->json(['message' => 'Subscriber not found'], 404);
+        }
+
+        $subscriber->delete();
+
+        return response()->json(['message' => 'Subscriber deleted successfully']);
     }
 }
