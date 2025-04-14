@@ -49,6 +49,35 @@ export const api = {
         return data;
     },
 
+    // Newsletter Operations
+    sendNewsletter: async (newsletterData) => {
+        try {
+            console.log('Sending newsletter:', newsletterData);
+            const response = await fetch(`${API_BASE_URL}/newsletters/send`, {
+                method: 'POST',
+                headers: getHeaders(),
+                body: JSON.stringify(newsletterData),
+            });
+            
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                console.error('Newsletter sending error:', {
+                    status: response.status,
+                    statusText: response.statusText,
+                    errorData
+                });
+                throw new Error(errorData.message || 'Failed to send newsletter');
+            }
+            
+            const data = await response.json();
+            console.log('Newsletter sent successfully:', data);
+            return data;
+        } catch (error) {
+            console.error('Network error:', error);
+            throw error;
+        }
+    },
+
     // Newsletter Subscription
     subscribeToNewsletter: async (email) => {
         try {

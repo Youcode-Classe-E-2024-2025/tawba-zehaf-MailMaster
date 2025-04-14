@@ -23,3 +23,4 @@ Route::middleware('auth:sanctum')->group(function () {
 use App\Http\Controllers\MailingListController;
 
 Route::apiResource('newsletters', NewsletterController::class);
+Route::post('/subscribers/public', [SubscriberController::class, 'publicSubscribe']);

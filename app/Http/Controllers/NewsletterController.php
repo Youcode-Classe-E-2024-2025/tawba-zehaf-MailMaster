@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Newsletter;
+use App\Mail\NewsletterMail;
+use App\Models\Subscriber;
+use Illuminate\Support\Facades\Mail;
 
 class NewsletterController extends Controller
 {
@@ -82,5 +85,33 @@ class NewsletterController extends Controller
         $newsletter->delete();
 
         return response()->json(['message' => 'Newsletter deleted successfully']);
+    }
+
+    public function send(Request $request)
+    {
+        $request->validate([
+            'subject' => 'required|string|max:255',
+            'content' => 'required|string',
+        ]);
+
+        $subscribers = Subscriber::where('status', 'active')->get();
+
+        foreach ($subscribers as $subscriber) {
+            $unsubscribeUrl = route('unsubscribe', ['email' => $subscriber->email]);
+            $preferencesUrl = route('preferences', ['email' => $subscriber->email]);
+
+            Mail::to($subscriber->email)
+                ->send(new NewsletterMail(
+                    $request->subject,
+                    $request->content,
+                    $unsubscribeUrl,
+                    $preferencesUrl
+                ));
+        }
+
+        return response()->json([
+            'message' => 'Newsletter sent successfully',
+            'recipients' => $subscribers->count()
+        ]);
     }
 }
