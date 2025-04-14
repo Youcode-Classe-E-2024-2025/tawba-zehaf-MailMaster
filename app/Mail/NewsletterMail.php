@@ -17,27 +17,26 @@ class NewsletterMail extends Mailable
     public $unsubscribeUrl;
     public $preferencesUrl;
 
-    public function __construct($subject, $content, $unsubscribeUrl, $preferencesUrl)
+    public function __construct($subject, $content, $email)
     {
         $this->subject = $subject;
         $this->content = $content;
-        $this->unsubscribeUrl = $unsubscribeUrl;
-        $this->preferencesUrl = $preferencesUrl;
+        $this->unsubscribeUrl = route('unsubscribe', ['email' => $email]);
+        $this->preferencesUrl = route('preferences', ['email' => $email]);
     }
 
-    public function envelope(): Envelope
+    public function envelope()
     {
         return new Envelope(
             subject: $this->subject,
         );
     }
 
-    public function content(): Content
+    public function content()
     {
         return new Content(
             view: 'emails.newsletter',
             with: [
-                'subject' => $this->subject,
                 'content' => $this->content,
                 'unsubscribeUrl' => $this->unsubscribeUrl,
                 'preferencesUrl' => $this->preferencesUrl,

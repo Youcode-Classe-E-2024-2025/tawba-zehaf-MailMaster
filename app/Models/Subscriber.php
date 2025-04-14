@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Subscriber extends Model
 {
+    use HasFactory;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -13,7 +16,7 @@ class Subscriber extends Model
      */
     protected $fillable = [
         'email',
-        'subscribed',
+        'status',
     ];
 
     /**
@@ -22,6 +25,23 @@ class Subscriber extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        'subscribed' => 'boolean',
+        'status' => 'string',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime'
     ];
+
+    public function scopeActive($query)
+    {
+        return $query->where('status', 'active');
+    }
+
+    public function activate()
+    {
+        $this->update(['status' => 'active']);
+    }
+
+    public function deactivate()
+    {
+        $this->update(['status' => 'inactive']);
+    }
 }

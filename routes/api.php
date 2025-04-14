@@ -28,3 +28,7 @@ Route::apiResource('newsletters', NewsletterController::class);
 Route::post('/subscribers/public', [SubscriberController::class, 'publicSubscribe']);
 
 Route::post('/test-email', [TestEmailController::class, 'sendTestEmail']);
+
+Route::post('/send-newsletter', [NewsletterController::class, 'send']);
+
+Route::post('/newsletters/send', [NewsletterController::class, 'send']);

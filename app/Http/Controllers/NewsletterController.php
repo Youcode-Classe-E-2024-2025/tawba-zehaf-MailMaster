@@ -90,28 +90,23 @@ class NewsletterController extends Controller
     public function send(Request $request)
     {
         $request->validate([
-            'subject' => 'required|string|max:255',
+            'subject' => 'required|string',
             'content' => 'required|string',
         ]);
 
         $subscribers = Subscriber::where('status', 'active')->get();
 
         foreach ($subscribers as $subscriber) {
-            $unsubscribeUrl = route('unsubscribe', ['email' => $subscriber->email]);
-            $preferencesUrl = route('preferences', ['email' => $subscriber->email]);
-
             Mail::to($subscriber->email)
                 ->send(new NewsletterMail(
                     $request->subject,
                     $request->content,
-                    $unsubscribeUrl,
-                    $preferencesUrl
+                    $subscriber->email
                 ));
         }
 
         return response()->json([
-            'message' => 'Newsletter sent successfully',
-            'recipients' => $subscribers->count()
+            'message' => 'Newsletter sent successfully'
         ]);
     }
 }

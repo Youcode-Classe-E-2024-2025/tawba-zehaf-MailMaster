@@ -99,4 +99,16 @@ class SubscriberController extends Controller
             'subscriber' => $subscriber
         ], 201);
     }
+
+    public function unsubscribe($email)
+    {
+        $subscriber = Subscriber::where('email', $email)->first();
+
+        if ($subscriber) {
+            $subscriber->update(['status' => 'inactive']);
+            return view('unsubscribe-success');
+        }
+
+        return view('unsubscribe-error');
+    }
 }
