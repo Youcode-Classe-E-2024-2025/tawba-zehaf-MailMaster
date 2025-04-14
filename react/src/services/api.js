@@ -199,4 +199,22 @@ export const api = {
             throw error;
         }
     },
+
+    async getSubscribers() {
+        try {
+            const response = await fetch(`${API_BASE_URL}/subscribers`, {
+                method: 'GET',
+                headers: getHeaders(),
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to fetch subscribers');
+            }
+
+            return await response.json();
+        } catch (error) {
+            console.error('Error fetching subscribers:', error);
+            throw error;
+        }
+    },
 }; 

@@ -21,6 +21,21 @@ const SubscribersList = () => {
         fetchSubscribers();
     }, []);
 
+    const handleStatusChange = async (subscriber) => {
+        try {
+            const newStatus = subscriber.status === 'active' ? 'inactive' : 'active';
+            await api.updateSubscriberStatus(subscriber.id, newStatus);
+
+            setSubscribers(subscribers.map(s =>
+                s.id === subscriber.id
+                    ? { ...s, status: newStatus }
+                    : s
+            ));
+        } catch (error) {
+            setError('Failed to update subscriber status');
+        }
+    };
+
     if (loading) {
         return <div className="loading">Loading subscribers...</div>;
     }
