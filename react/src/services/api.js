@@ -2,11 +2,16 @@ const API_BASE_URL = 'http://localhost:8000/api';
 
 // Helper function to handle API responses
 const handleResponse = async (response) => {
-    const data = await response.json();
     if (!response.ok) {
-        throw new Error(data.message || 'Something went wrong');
+        const errorData = await response.json().catch(() => ({}));
+        console.error('API Error:', {
+            status: response.status,
+            statusText: response.statusText,
+            errorData
+        });
+        throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
     }
-    return data;
+    return response.json();
 };
 
 // Helper function to get headers with auth token
@@ -46,12 +51,39 @@ export const api = {
 
     // Newsletter Subscription
     subscribeToNewsletter: async (email) => {
-        const response = await fetch(`${API_BASE_URL}/subscribers`, {
-            method: 'POST',
-            headers: getHeaders(),
-            body: JSON.stringify({ email }),
-        });
-        return handleResponse(response);
+        try {
+            console.log('Attempting to subscribe with email:', email);
+            console.log('API Base URL:', API_BASE_URL);
+            
+            const response = await fetch(`${API_BASE_URL}/subscribers/public`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({ email }),
+            });
+            
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                console.error('Subscription error:', {
+                    status: response.status,
+                    statusText: response.statusText,
+                    errorData
+                });
+                throw new Error(errorData.message || 'Failed to subscribe');
+            }
+            
+            const data = await response.json();
+            console.log('Subscription successful:', data);
+            return data;
+        } catch (error) {
+            console.error('Network error:', error);
+            if (error.message.includes('Failed to fetch')) {
+                throw new Error('Unable to connect to the server. Please make sure the backend server is running at http://localhost:8000');
+            }
+            throw error;
+        }
     },
 
     // Campaigns

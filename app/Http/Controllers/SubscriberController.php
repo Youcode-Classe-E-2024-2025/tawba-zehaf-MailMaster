@@ -81,4 +81,21 @@ class SubscriberController extends Controller
 
         return response()->json(['message' => 'Subscriber deleted successfully']);
     }
+    public function publicSubscribe(Request $request)
+{
+    $request->validate([
+        'email' => 'required|email|unique:subscribers,email'
+    ]);
+
+    $subscriber = Subscriber::create([
+        'email' => $request->email,
+        'status' => 'active',
+        'is_public' => true
+    ]);
+
+    return response()->json([
+        'message' => 'Successfully subscribed to newsletter',
+        'subscriber' => $subscriber
+    ], 201);
+}
 }
