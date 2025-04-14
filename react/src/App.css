@@ -47,6 +47,7 @@
     padding: 20px;
 }
 
+/* Navigation */
 .navigation {
     background-color: #f8f9fa;
     padding: 1rem;
@@ -60,6 +61,7 @@
     margin: 0;
     display: flex;
     gap: 1rem;
+    align-items: center;
 }
 
 .navigation a {
@@ -74,6 +76,21 @@
     background-color: #e9ecef;
 }
 
+.logout-button {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.logout-button:hover {
+    background-color: #c82333;
+}
+
+/* Content */
 .content {
     background-color: white;
     padding: 2rem;
@@ -81,10 +98,33 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+/* Auth Forms */
+.login-container,
+.register-container,
+.subscribe-container {
+    max-width: 400px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.login-form,
+.register-form,
+.subscribe-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
 /* Form styles */
 .campaign-form,
 .subscriber-form,
-.newsletter-form {
+.newsletter-form,
+.login-form,
+.register-form,
+.subscribe-form {
     margin-bottom: 2rem;
     padding: 1rem;
     background-color: #f8f9fa;
@@ -93,7 +133,10 @@
 
 .campaign-form div,
 .subscriber-form div,
-.newsletter-form div {
+.newsletter-form div,
+.login-form div,
+.register-form div,
+.subscribe-form div {
     margin-bottom: 1rem;
 }
 
@@ -132,6 +175,11 @@ button:hover {
     background-color: #0056b3;
 }
 
+button:disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
+}
+
 /* List styles */
 .campaigns-list,
 .subscribers-list,
@@ -161,4 +209,439 @@ button:hover {
 .newsletter-item p {
     margin: 0.25rem 0;
     color: #666;
+}
+
+.newsletter-meta {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+/* Links between auth pages */
+.login-link,
+.register-link {
+    text-align: center;
+    margin-top: 1rem;
+    color: #666;
+}
+
+.login-link a,
+.register-link a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.login-link a:hover,
+.register-link a:hover {
+    text-decoration: underline;
+}
+
+/* Error and Loading states */
+.error-message {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 1rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+}
+
+.loading {
+    text-align: center;
+    padding: 2rem;
+    color: #666;
+}
+
+.no-newsletters,
+.no-campaigns,
+.no-subscribers {
+    text-align: center;
+    padding: 2rem;
+    color: #666;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+}
+
+/* General Styles */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+}
+
+.app {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Navigation */
+.navigation {
+    background-color: #333;
+    padding: 1rem;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.navigation a {
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.navigation a:hover {
+    background-color: #555;
+}
+
+.navigation button {
+    margin-left: auto;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.navigation button:hover {
+    background-color: #c82333;
+}
+
+/* Content */
+.content {
+    padding: 2rem;
+    flex: 1;
+}
+
+/* Auth Forms */
+.login-container,
+.register-container,
+.subscribe-container {
+    max-width: 400px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.login-form,
+.register-form,
+.subscribe-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.login-form input,
+.register-form input,
+.subscribe-form input,
+.login-form textarea,
+.register-form textarea,
+.subscribe-form textarea {
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.login-form button,
+.register-form button,
+.subscribe-form button {
+    padding: 0.5rem 1rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.login-form button:hover,
+.register-form button:hover,
+.subscribe-form button:hover {
+    background-color: #0056b3;
+}
+
+.login-form button:disabled,
+.register-form button:disabled,
+.subscribe-form button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* Lists */
+.campaigns-list,
+.subscribers-list,
+.newsletters-list {
+    display: grid;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.campaign-item,
+.subscriber-item,
+.newsletter-item {
+    background-color: white;
+    padding: 1rem;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.campaign-item h4,
+.subscriber-item h4,
+.newsletter-item h4 {
+    margin: 0 0 0.5rem 0;
+}
+
+.campaign-meta,
+.subscriber-meta,
+.newsletter-meta {
+    display: flex;
+    gap: 1rem;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+/* Error and Loading States */
+.error-message {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 1rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+}
+
+.success-message {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 1rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+}
+
+.loading {
+    text-align: center;
+    padding: 2rem;
+    color: #666;
+}
+
+/* Subscribe Info */
+.subscribe-info {
+    margin-top: 2rem;
+    text-align: center;
+    color: #666;
+}
+
+.subscribe-info p {
+    margin: 0.5rem 0;
+}
+
+/* Links */
+.login-link,
+.register-link {
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.login-link a,
+.register-link a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.login-link a:hover,
+.register-link a:hover {
+    text-decoration: underline;
+}
+
+/* Landing Page Styles */
+.landing-page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.hero {
+    background: linear-gradient(135deg, #1a237e, #0d47a1);
+    color: white;
+    text-align: center;
+    padding: 4rem 2rem;
+}
+
+.hero h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.main-content {
+    flex: 1;
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-bottom: 4rem;
+}
+
+.feature {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.feature h3 {
+    color: #1a237e;
+    margin-bottom: 1rem;
+}
+
+.newsletter-section {
+    background: white;
+    padding: 3rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.newsletter-section h2 {
+    color: #1a237e;
+    margin-bottom: 1rem;
+}
+
+.newsletter-section p {
+    color: #666;
+    margin-bottom: 2rem;
+}
+
+.input-group {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.input-group input {
+    flex: 1;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.input-group button {
+    padding: 0.8rem 2rem;
+    background-color: #1a237e;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.input-group button:hover {
+    background-color: #0d47a1;
+}
+
+.input-group button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.privacy-note {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.footer {
+    background-color: #f5f5f5;
+    padding: 2rem;
+    text-align: center;
+    color: #666;
+}
+
+/* Landing Page Header */
+.landing-header {
+    background: linear-gradient(135deg, #1a237e, #0d47a1);
+    color: white;
+    padding: 1rem 2rem;
+}
+
+.header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-content h1 {
+    margin: 0;
+    font-size: 2rem;
+}
+
+.auth-nav {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.nav-link {
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.nav-button {
+    background-color: transparent;
+    color: white;
+    border: 1px solid white;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.nav-button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Hero Section */
+.hero {
+    text-align: center;
+    padding: 4rem 2rem;
+    background-color: #f8f9fa;
+}
+
+.hero h2 {
+    font-size: 2rem;
+    color: #1a237e;
+    max-width: 800px;
+    margin: 0 auto;
 }
