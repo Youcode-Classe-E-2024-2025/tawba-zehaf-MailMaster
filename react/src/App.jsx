@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route, Link, Navigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Campaigns from './components/Campaigns';
-import Subscribers from './components/Subscribers';
+import SubscribersList from './components/SubscribersList';
 import Newsletters from './components/Newsletters';
 import Login from './components/Login';
 import Register from './components/Register';
@@ -44,7 +44,7 @@ function App() {
             <main className="content">
               <Routes>
                 <Route path="/campaigns" element={<Campaigns />} />
-                <Route path="/subscribers" element={<Subscribers />} />
+                <Route path="/subscribers" element={<SubscribersList />} />
                 <Route path="/newsletters" element={<Newsletters />} />
                 <Route path="/send-newsletter" element={<SendNewsletter />} />
                 <Route path="*" element={<Navigate to="/campaigns" />} />

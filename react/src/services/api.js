@@ -180,4 +180,23 @@ export const api = {
         localStorage.removeItem('auth_token');
         localStorage.removeItem('user_email');
     },
+
+    async updateSubscriberStatus(subscriberId, status) {
+        try {
+            const response = await fetch(`${API_BASE_URL}/subscribers/${subscriberId}/status`, {
+                method: 'PATCH',
+                headers: getHeaders(),
+                body: JSON.stringify({ status }),
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to update subscriber status');
+            }
+
+            return await response.json();
+        } catch (error) {
+            console.error('Error updating subscriber status:', error);
+            throw error;
+        }
+    },
 }; 

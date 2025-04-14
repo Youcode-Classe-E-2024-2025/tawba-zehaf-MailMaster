@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\SubscriberController;
 use App\Http\Controllers\CampaignController;
+use App\Http\Controllers\TestEmailController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -13,14 +14,17 @@ Route::get('/user', function (Request $request) {
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
-Route::middleware('auth:sanctum')->get('/user', fn (Request $request) => $request->user());
+Route::middleware('auth:sanctum')->get('/user', fn(Request $request) => $request->user());
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('newsletters', NewsletterController::class);
     Route::apiResource('subscribers', SubscriberController::class);
     Route::apiResource('campaigns', CampaignController::class);
 });
+
 use App\Http\Controllers\MailingListController;
 
 Route::apiResource('newsletters', NewsletterController::class);
 Route::post('/subscribers/public', [SubscriberController::class, 'publicSubscribe']);
+
+Route::post('/test-email', [TestEmailController::class, 'sendTestEmail']);
